@@ -6,9 +6,11 @@ import { AuthProvider,useAuth } from '../lib/AuthContext';
 import PrivateRoute from './PrivateRoute';
 import { useNavigate } from 'react-router-dom';
 
+
 import { parseFragmentString, saveOAuthParams, getSavedOAuthParams } from '../lib/oauthUtils';
 
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+console.log(GOOGLE_CLIENT_ID)
 const REDIRECT_URI = 'http://localhost:5173';
 
 type OAuthParams = {
@@ -25,7 +27,7 @@ const buttonStyle = {
   cursor: "pointer",
   top: "50px",
   left: "50%",
-  transform: "translateX(-50%)",
+  transform: "translateX(50%)",
 };
 
 const MainApp: React.FC = () => {
