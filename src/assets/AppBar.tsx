@@ -60,6 +60,7 @@ const AppBar: React.FC = () => {
                     marginRight:10,
                     right:10
                 }}
+                // TODO: アイコン画像をクリックしたときにメニューバーを表示したい
             ></img>
         </div>
     );
