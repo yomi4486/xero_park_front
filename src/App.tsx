@@ -1,5 +1,5 @@
 // App.tsx
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback,useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import { AuthProvider,useAuth } from '../lib/AuthContext';
@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 
 
 import { parseFragmentString, saveOAuthParams, getSavedOAuthParams } from '../lib/oauthUtils';
+import EditPage from './Edit';
+import AppBar from './assets/AppBar';
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 const REDIRECT_URI = 'http://localhost:5173';
@@ -16,17 +18,6 @@ type OAuthParams = {
   [key: string]: string;
 };
 
-const buttonStyle = {
-  backgroundColor: "#4285f4",
-  color: "white",
-  padding: "10px 20px",
-  border: "none",
-  borderRadius: "2px",
-  fontSize: "18px",
-  cursor: "pointer",
-  top: "50px",
-  left: "50%",
-};
 
 const MainApp: React.FC = () => {
   const { handleAuthSuccess, isAuthenticated } = useAuth();
@@ -112,11 +103,57 @@ const MainApp: React.FC = () => {
       window.removeEventListener('hashchange', handleHashChange);
     };
   }, [performGoogleAuth]);
+
+  const useWindowWidth = () => {
+    const [width, setWidth] = useState(window.innerWidth);
   
-  performGoogleAuth()
+    useEffect(() => {
+      const handleResize = () => setWidth(window.innerWidth);
+      window.addEventListener('resize', handleResize);
+  
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }, []);
+  
+    return width;
+  };
+  
+  const bodyStyle = {
+    backgroundColor: "#FEFFFE",
+    width: useWindowWidth(),
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
+    margin: 0,
+  };
+  const buttonStyle = {
+    backgroundColor: "#4285f4",
+    color: "white",
+    padding: "10px 20px",
+    border: "none",
+    borderRadius: "2px",
+    fontSize: "18px",
+    cursor: "pointer",
+  };
+  
+  const centerContainer:React.CSSProperties  = {
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    textAlign: 'center'
+  }
+  
 
   const Home: React.FC = () => (
-    <button style={buttonStyle} onClick={performGoogleAuth}>Googleでログイン</button>
+    <body style={bodyStyle}>
+    <AppBar/>
+    <div style={centerContainer}>
+        <h1 style={{textAlign:"center"}}>XeroParkへようこそ！</h1>
+        <p style={{textAlign:"center",marginBottom:30}}>あなたの素晴らしい実績をここに書き残しましょう！</p>
+        <button style={buttonStyle} onClick={performGoogleAuth}>ログイン</button>
+    </div>
+    </body>
   );
 
   return (
@@ -125,10 +162,13 @@ const MainApp: React.FC = () => {
         path="/" 
         element={<Home />} 
       />
-      
       <Route 
         path="/Dashboard" 
         element={<PrivateRoute><Dashboard /></PrivateRoute>} 
+      />
+      <Route 
+        path="/Edit" 
+        element={<PrivateRoute><EditPage /></PrivateRoute>} 
       />
     </Routes>
   );
