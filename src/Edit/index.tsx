@@ -16,6 +16,21 @@ const useWindowWidth = () => {
     return width;
 };
 
+const useWindowHeight = () => {
+    const [height, setHeight] = useState(window.innerHeight);
+  
+    useEffect(() => {
+      const handleResize = () => setHeight(window.innerHeight);
+      window.addEventListener('resize', handleResize);
+  
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }, []);
+  
+    return height;
+};
+
 const EditPage: React.FC = () => {
     const bodyStyle = {
         backgroundColor: "#FEFFFE",
@@ -35,16 +50,42 @@ const EditPage: React.FC = () => {
         fontSize: "18px",
         cursor: "pointer",
     };
-    const centerContainer:React.CSSProperties  = {
+    const centerContainer:React.CSSProperties  = { 
+        textAlign: 'center'
+    };
+    const titleInputStyle:React.CSSProperties  = {
         justifyContent: 'center', 
         alignItems: 'center', 
-        textAlign: 'center'
-    }
+        border:"None",
+        height:60,
+        width:useWindowWidth()*0.5,
+        borderRadius:4,
+        textAlign:"left",
+        margin:10,
+        padding:10,
+        background:"#111111"
+    };
+    const contentInputStyle:React.CSSProperties  = {
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        border:"None",
+        width:useWindowWidth()*0.5 - 20,
+        height:useWindowHeight()*0.7,
+        borderRadius:4,
+        textAlign:"left",
+        margin:10,
+        padding:20,
+        background:"#111111",
+        resize: "none"
+    };
     return (
         <body style={bodyStyle}>
         <AppBar/>
         <div style={centerContainer}>
-        <button style={buttonStyle}>投稿</button>
+            <input type="text" style={titleInputStyle} placeholder="タイトル"/>
+            <textarea style={contentInputStyle} placeholder="内容"/>
+            <br />
+            <button style={buttonStyle}>投稿</button>
         </div>
         </body>
     );
