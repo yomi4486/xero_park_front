@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import AppBar from '../assets/AppBar';
+import AppBar from '../assets/AppBar/index';
 const useWindowWidth = () => {
     const [width, setWidth] = useState(window.innerWidth);
   

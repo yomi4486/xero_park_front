@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuth } from '../../lib/AuthContext';
+import { useAuth } from '../../../lib/AuthContext';
 const AppBar: React.FC = () => {
     const appBarStyle: React.CSSProperties = { 
         height:40,

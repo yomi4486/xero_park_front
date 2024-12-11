@@ -17,7 +17,7 @@ type OAuthParams = {
 };
 
 const MainApp: React.FC = () => {
-  const { handleAuthSuccess, isAuthenticated } = useAuth();
+  const { handleAuthSuccess } = useAuth();
   const navigate = useNavigate();
 
   const performGoogleAuth = useCallback(() => {
