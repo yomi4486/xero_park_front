@@ -8,17 +8,33 @@ const AppBar: React.FC = () => {
         width: '100%', 
         backgroundColor: '#333', 
         color: 'white', padding: '10px 0',  
-        zIndex: 1000, 
+        zIndex: 999, 
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
         display: 'flex', 
         alignItems: 'center',
         justifyContent: 'space-between'
     };
+    const buttonStyle = {
+        backgroundColor: "#4285f4",
+        color: "white",
+        padding: "10px 20px",
+        border: "none",
+        borderRadius: "2px",
+        fontSize: "18px",
+        cursor: "pointer",
+      };
     const { user } = useAuth();
     if (!user){ // 未ログイン時の挙動を記述
         return (
             <div style={appBarStyle}>
-                <img src=""></img>
+                <p 
+                    style={{
+                        textAlign:"left",                    
+                        marginLeft:20,
+                        marginRight:10,
+                        left:10
+                    }}
+                >Xero Park</p>
             </div>
         )
     }

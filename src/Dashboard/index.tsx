@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import AppBar from '../assets/AppBar';
+import { useAuth } from '../../lib/AuthContext';
+
+import FlashMessage from '../assets/SnackBar';
+
 const useWindowWidth = () => {
     const [width, setWidth] = useState(window.innerWidth);
   
@@ -17,6 +21,14 @@ const useWindowWidth = () => {
 };
 
 const Dashboard: React.FC = () => {
+    const navigate = useNavigate();
+    const handleButtonClick = () => { 
+        try{
+            navigate('/Edit'); 
+        }catch(e){
+            console.error(e);
+        }
+    };
     const bodyStyle = {
         backgroundColor: "#FEFFFE",
         width: useWindowWidth(),
@@ -35,18 +47,31 @@ const Dashboard: React.FC = () => {
         fontSize: "18px",
         cursor: "pointer",
       };
-    const centerContainer:React.CSSProperties  = {
+    const centerContainer:React.CSSProperties = {
         justifyContent: 'center', 
         alignItems: 'center', 
         textAlign: 'center'
     }
+    const { user } = useAuth();
+    if(!user){
+        return (
+            <body style={bodyStyle}>
+            <AppBar/>
+            <div style={centerContainer}>
+                <h1 style={{textAlign:"center"}}>XeroParkへようこそ！</h1>
+                <p style={{textAlign:"center",marginBottom:30}}>あなたの素晴らしい実績をここに書き残しましょう！</p>
+            </div>
+            </body>
+        );
+    }
     return (
         <body style={bodyStyle}>
+        <FlashMessage message="ログインに成功しました" type="ok"/>
         <AppBar/>
         <div style={centerContainer}>
             <h1 style={{textAlign:"center"}}>XeroParkへようこそ！</h1>
             <p style={{textAlign:"center",marginBottom:30}}>あなたの素晴らしい実績をここに書き残しましょう！</p>
-            <button style={buttonStyle}>記事を投稿</button>
+            <button style={buttonStyle} onClick={handleButtonClick}>記事を投稿</button>
         </div>
         </body>
     );

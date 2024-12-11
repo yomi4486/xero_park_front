@@ -1,0 +1,19 @@
+@keyframes slideDownUp {
+    0% {
+      transform: translateY(-100%);
+    }
+    10% {
+      transform: translateY(0);
+    }
+    90% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-100%);
+    }
+}
+
+.flash-message {
+animation: slideDownUp 3s ease-in-out;
+}
+  
