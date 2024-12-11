@@ -8,3 +8,7 @@ make run
 ```sh
 make install
 ```
+
+> release 1.1.0
+- ログイン機能と投稿機能を実装
+- 軽微なバグとUIの修正

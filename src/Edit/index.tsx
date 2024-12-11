@@ -34,7 +34,7 @@ const EditPage: React.FC = () => {
         borderRadius: "2px",
         fontSize: "18px",
         cursor: "pointer",
-      };
+    };
     const centerContainer:React.CSSProperties  = {
         justifyContent: 'center', 
         alignItems: 'center', 
@@ -44,7 +44,7 @@ const EditPage: React.FC = () => {
         <body style={bodyStyle}>
         <AppBar/>
         <div style={centerContainer}>
-        <button>投稿</button>
+        <button style={buttonStyle}>投稿</button>
         </div>
         </body>
     );
