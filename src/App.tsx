@@ -1,12 +1,10 @@
 // App.tsx
-import React, { useEffect, useCallback,useState } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Dashboard from './Dashboard';
-import { AuthProvider,useAuth } from '../lib/AuthContext';
+import { AuthProvider, useAuth } from '../lib/AuthContext';
 import PrivateRoute from './PrivateRoute';
 import { useNavigate } from 'react-router-dom';
-
-
 import { parseFragmentString, saveOAuthParams, getSavedOAuthParams } from '../lib/oauthUtils';
 import EditPage from './Edit';
 import AppBar from './assets/AppBar';
@@ -18,16 +16,9 @@ type OAuthParams = {
   [key: string]: string;
 };
 
-
 const MainApp: React.FC = () => {
   const { handleAuthSuccess, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/dashboard');
-    }
-  }, [isAuthenticated, navigate]);
 
   const performGoogleAuth = useCallback(() => {
     const params = getSavedOAuthParams();
@@ -44,6 +35,7 @@ const MainApp: React.FC = () => {
             picture: userInfo.picture,
           };
           handleAuthSuccess(user);
+          navigate('/Dashboard'); // ログイン成功時に/Dashboardに遷移
         } else if (xhr.readyState === 4 && xhr.status === 401) {
           oauth2SignIn();
         }
@@ -52,8 +44,7 @@ const MainApp: React.FC = () => {
     } else {
       oauth2SignIn();
     }
-  }, [handleAuthSuccess]);
-  
+  }, [handleAuthSuccess, navigate]);
 
   const oauth2SignIn = () => {
     const oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth';
@@ -86,7 +77,7 @@ const MainApp: React.FC = () => {
     function handleHashChange() {
       const fragmentString = window.location.hash.substring(1);
       const params = parseFragmentString(fragmentString);
-  
+
       if (Object.keys(params).length > 0) {
         saveOAuthParams(params);
         if (params['state'] && params['state'] === 'perform_google_auth') {
@@ -94,11 +85,11 @@ const MainApp: React.FC = () => {
         }
       }
     }
-  
+
     handleHashChange();
-  
+
     window.addEventListener('hashchange', handleHashChange);
-  
+
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
     };
@@ -106,19 +97,19 @@ const MainApp: React.FC = () => {
 
   const useWindowWidth = () => {
     const [width, setWidth] = useState(window.innerWidth);
-  
+
     useEffect(() => {
       const handleResize = () => setWidth(window.innerWidth);
       window.addEventListener('resize', handleResize);
-  
+
       return () => {
         window.removeEventListener('resize', handleResize);
       };
     }, []);
-  
+
     return width;
   };
-  
+
   const bodyStyle = {
     backgroundColor: "#FEFFFE",
     width: useWindowWidth(),
@@ -137,41 +128,41 @@ const MainApp: React.FC = () => {
     fontSize: "18px",
     cursor: "pointer",
   };
-  
-  const centerContainer:React.CSSProperties  = {
-    justifyContent: 'center', 
-    alignItems: 'center', 
+
+  const centerContainer: React.CSSProperties = {
+    justifyContent: 'center',
+    alignItems: 'center',
     textAlign: 'center'
   }
-  
 
   const Home: React.FC = () => (
     <body style={bodyStyle}>
-    <AppBar/>
-    <div style={centerContainer}>
-        <h1 style={{textAlign:"center"}}>XeroParkへようこそ！</h1>
-        <p style={{textAlign:"center",marginBottom:30}}>あなたの素晴らしい実績をここに書き残しましょう！</p>
+      <AppBar />
+      <div style={centerContainer}>
+        <h1 style={{ textAlign: "center" }}>XeroParkへようこそ！</h1>
+        <p style={{ textAlign: "center", marginBottom: 30 }}>あなたの素晴らしい実績をここに書き残しましょう！</p>
         <button style={buttonStyle} onClick={performGoogleAuth}>ログイン</button>
-    </div>
+      </div>
     </body>
   );
 
   return (
     <Routes>
-      <Route 
-        path="/" 
-        element={<Home />} 
+      <Route
+        path="/"
+        element={<Home />}
       />
-      <Route 
-        path="/Dashboard" 
-        element={<PrivateRoute><Dashboard /></PrivateRoute>} 
+      <Route
+        path="/Dashboard"
+        element={<PrivateRoute><Dashboard /></PrivateRoute>}
       />
-      <Route 
-        path="/Edit" 
-        element={<PrivateRoute><EditPage /></PrivateRoute>} 
+      <Route
+        path="/Edit"
+        element={<PrivateRoute><EditPage /></PrivateRoute>}
       />
     </Routes>
   );
+
 };
 
 const App: React.FC = () => {

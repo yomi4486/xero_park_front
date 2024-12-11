@@ -14,15 +14,7 @@ const AppBar: React.FC = () => {
         alignItems: 'center',
         justifyContent: 'space-between'
     };
-    const buttonStyle = {
-        backgroundColor: "#4285f4",
-        color: "white",
-        padding: "10px 20px",
-        border: "none",
-        borderRadius: "2px",
-        fontSize: "18px",
-        cursor: "pointer",
-      };
+    
     const { user } = useAuth();
     if (!user){ // 未ログイン時の挙動を記述
         return (

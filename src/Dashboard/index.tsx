@@ -4,6 +4,7 @@ import AppBar from '../assets/AppBar';
 import { useAuth } from '../../lib/AuthContext';
 
 import FlashMessage from '../assets/SnackBar';
+import headerImage from '../assets/header.png'
 
 const useWindowWidth = () => {
     const [width, setWidth] = useState(window.innerWidth);
@@ -24,7 +25,7 @@ const Dashboard: React.FC = () => {
     const navigate = useNavigate();
     const handleButtonClick = () => { 
         try{
-            navigate('/Edit');
+            navigate("/Edit");
         }catch(e){
             console.error(e);
         }
@@ -58,19 +59,22 @@ const Dashboard: React.FC = () => {
             <body style={bodyStyle}>
             <AppBar/>
             <div style={centerContainer}>
-                <h1 style={{textAlign:"center"}}>XeroParkへようこそ！</h1>
-                <p style={{textAlign:"center",marginBottom:30}}>あなたの素晴らしい実績をここに書き残しましょう！</p>
+                <img src={headerImage} style={{width:"35%"}}></img>
+                <h1 style={{textAlign:"center",color:"#111111"}}>XeroParkへようこそ！</h1>
+                <p style={{textAlign:"center",marginBottom:30,color:"#111111"}}>あなたの素晴らしい実績をここに書き残しましょう！</p>
             </div>
             </body>
         );
     }
     return (
         <body style={bodyStyle}>
+            
         <FlashMessage message="ログインに成功しました" type="ok"/>
         <AppBar/>
         <div style={centerContainer}>
-            <h1 style={{textAlign:"center"}}>XeroParkへようこそ！</h1>
-            <p style={{textAlign:"center",marginBottom:30}}>あなたの素晴らしい実績をここに書き残しましょう！</p>
+            <img src={headerImage} style={{width:"35%"}}></img>
+            <h1 style={{textAlign:"center",color:"#111111"}}>XeroParkへようこそ！</h1>
+            <p style={{textAlign:"center",marginBottom:30,color:"#111111"}}>あなたの素晴らしい実績をここに書き残しましょう！</p>
             <button style={buttonStyle} onClick={handleButtonClick}>記事を投稿</button>
         </div>
         </body>
