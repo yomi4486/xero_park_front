@@ -46,7 +46,13 @@ const MainApp: React.FC = () => {
       xhr.open('GET', `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${params['access_token']}`);
       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-          handleAuthSuccess();
+          const userInfo = JSON.parse(xhr.responseText);
+          const user = {
+            name: userInfo.name,
+            email: userInfo.email,
+            picture: userInfo.picture,
+          };
+          handleAuthSuccess(user);
         } else if (xhr.readyState === 4 && xhr.status === 401) {
           oauth2SignIn();
         }
@@ -56,6 +62,7 @@ const MainApp: React.FC = () => {
       oauth2SignIn();
     }
   }, [handleAuthSuccess]);
+  
 
   const oauth2SignIn = () => {
     const oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth';
@@ -106,6 +113,8 @@ const MainApp: React.FC = () => {
     };
   }, [performGoogleAuth]);
   
+  performGoogleAuth()
+
   const Home: React.FC = () => (
     <button style={buttonStyle} onClick={performGoogleAuth}>Googleでログイン</button>
   );
