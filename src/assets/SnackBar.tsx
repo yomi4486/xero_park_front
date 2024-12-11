@@ -28,12 +28,16 @@ const FlashMessage = ({ message,type }:{message:string,type:MessageType}) => {
     zIndex:1000,
     top:10,
     textAlign:"center",
-    borderRadius:10,
-    transform: "translateX(-50%)"
+    borderRadius:2,
+    transform: "translateX(-50%)",
+    width:300,
+    height:60,
+    justifyContent: "center",
+    alignItems: "center"
   };
   return (
     <div className="flash-message" style={cardStyle}>
-      <p style={{color:"#FFFFFF",padding:"0px 10px",fontSize:20,fontWeight:"bold"}}>{message}</p>
+      <p style={{color:"#FFFFFF",padding:"0px 2px",fontSize:19,fontWeight:"bold"}}>{message}</p>
     </div>
   );
 };

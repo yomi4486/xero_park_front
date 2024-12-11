@@ -24,7 +24,7 @@ const Dashboard: React.FC = () => {
     const navigate = useNavigate();
     const handleButtonClick = () => { 
         try{
-            navigate('/Edit'); 
+            navigate('/Edit');
         }catch(e){
             console.error(e);
         }
