@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AppBar from '../assets/AppBar';
+import AppBar from '../assets/AppBar/index';
 import { useAuth } from '../../lib/AuthContext';
 
 import FlashMessage from '../assets/SnackBar';
