@@ -10,7 +10,6 @@ import { useNavigate } from 'react-router-dom';
 import { parseFragmentString, saveOAuthParams, getSavedOAuthParams } from '../lib/oauthUtils';
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-console.log(GOOGLE_CLIENT_ID)
 const REDIRECT_URI = 'http://localhost:5173';
 
 type OAuthParams = {
@@ -27,7 +26,6 @@ const buttonStyle = {
   cursor: "pointer",
   top: "50px",
   left: "50%",
-  transform: "translateX(50%)",
 };
 
 const MainApp: React.FC = () => {
@@ -44,7 +42,8 @@ const MainApp: React.FC = () => {
     const params = getSavedOAuthParams();
     if (params && params['access_token']) {
       const xhr = new XMLHttpRequest();
-      xhr.open('GET', `https://www.googleapis.com/drive/v3/about?fields=user&access_token=${params['access_token']}`);
+      console.log(params);
+      xhr.open('GET', `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${params['access_token']}`);
       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
           handleAuthSuccess();
@@ -63,7 +62,7 @@ const MainApp: React.FC = () => {
     const params: OAuthParams = {
       'client_id': `${GOOGLE_CLIENT_ID}`,
       'redirect_uri': REDIRECT_URI,
-      'scope': 'https://www.googleapis.com/auth/drive.metadata.readonly',
+      'scope': 'https://www.googleapis.com/auth/userinfo.profile',
       'state': 'perform_google_auth',
       'include_granted_scopes': 'true',
       'response_type': 'token'
@@ -108,7 +107,7 @@ const MainApp: React.FC = () => {
   }, [performGoogleAuth]);
   
   const Home: React.FC = () => (
-    <button style={buttonStyle} onClick={performGoogleAuth}>Google認証</button>
+    <button style={buttonStyle} onClick={performGoogleAuth}>Googleでログイン</button>
   );
 
   return (
