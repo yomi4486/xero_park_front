@@ -130,6 +130,13 @@ const EditPage: React.FC = () => {
         if(inputRef.current) inputRef.current.focus();
     };
 
+    // 水平線を作成
+    const createSplitLine = () => {
+        setContentText(contentText+"\n___\n")
+        if(inputRef.current) inputRef.current.focus();
+    };
+
+    // 箇条書きを作成(上の行に箇条書きが存在する場合は、インデントをつける)
     const createPoints = () => {
         const lines = contentText.split('\n');
         const targetContext = lines[lines.length-2];
@@ -143,6 +150,7 @@ const EditPage: React.FC = () => {
         }
         if(inputRef.current) inputRef.current.focus();
     };
+
 
     const navigate = useNavigate();
 
@@ -195,6 +203,7 @@ const EditPage: React.FC = () => {
                             <li className='menu-item' style={{ borderBottom: '1px solid #ccc',paddingTop:2,paddingBottom:2 }} onClick={createCodeBlock}>ソースコード</li> 
                             <li className='menu-item' style={{ borderBottom: '1px solid #ccc',paddingTop:2,paddingBottom:2 }} onClick={createURL}>URL</li>
                             <li className='menu-item' style={{ borderBottom: '1px solid #ccc',paddingTop:2,paddingBottom:2 }} onClick={createPoints}>箇条書き</li>
+                            <li className='menu-item' style={{ borderBottom: '1px solid #ccc',paddingTop:2,paddingBottom:2 }} onClick={createSplitLine}>主題区切り（水平線）</li>
                             <li className='menu-item'>画像</li> 
                         </ul> 
                     )}  
