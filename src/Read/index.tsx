@@ -4,6 +4,8 @@ import AppBar from '../assets/AppBar/index';
 
 import getContext from '../../lib/get';
 
+import ReactMarkdown from 'react-markdown';
+
 const useWindowWidth = () => {
     const [width, setWidth] = useState(window.innerWidth);
   
@@ -36,7 +38,15 @@ const useWindowHeight = () => {
 
 const ReadPage: React.FC = () => {    
     const { id } = useParams();
-    let content = getContext({id:`${id}`})
+    const [content, setContent] = useState<{ title: string, content: string, author: string,lastedit:string } | null>(null);
+    useEffect(()=>{
+    const getContent = async () => {
+        const result = await getContext({id:`${id}`});
+        setContent(result ?? { title: "No title", content: "No content", author: "Unknown"});
+    };
+        getContent();
+    },[id]);
+
     const bodyStyle = {
         backgroundColor: "#FEFFFE",
         width: useWindowWidth(),
@@ -46,50 +56,23 @@ const ReadPage: React.FC = () => {
         height: '100vh',
         margin: 0,
     };
-    const buttonStyle = {
-        backgroundColor: "#4285f4",
-        color: "white",
-        padding: "10px 20px",
-        border: "none",
-        borderRadius: "2px",
-        fontSize: "18px",
-        cursor: "pointer",
-    };
     const centerContainer:React.CSSProperties  = { 
-        textAlign: 'center'
-    };
-    const titleInputStyle:React.CSSProperties  = {
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        border:"None",
-        height:50,
         width:useWindowWidth()*0.5,
-        borderRadius:4,
-        textAlign:"left",
-        margin:10,
-        padding:10,
-        background:"#111111",
-        color:"#eeeeee"
-    };
-    const contentInputStyle:React.CSSProperties  = {
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        border:"None",
-        width:useWindowWidth()*0.5 - 20,
-        height:useWindowHeight()*0.6,
-        borderRadius:4,
-        textAlign:"left",
-        margin:10,
-        padding:20,
-        background:"#111111",
-        resize: "none",
-        color:"#eeeeee"
+        height:'auto',
+        textAlign:'center',
+        backgroundColor:"#EEEEEE"
+
     };
     return (
         <body style={bodyStyle}>
         <AppBar/>
         <div style={centerContainer}>
-            <p>{`表示ページ:${id}`}</p>
+            <h2 style={{textAlign:'left',margin:10}}>{content?.title}</h2>
+            <p style={{textAlign:'left',marginLeft:20}}>{content?.author}・{content?.lastedit}</p>
+            <hr/>
+            <p style={{textAlign:'left',margin:10}}>
+                <ReactMarkdown>{content?.content}</ReactMarkdown>
+            </p>
         </div>
         </body>
     );
