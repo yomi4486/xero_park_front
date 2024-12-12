@@ -21,19 +21,22 @@ const useWindowWidth = () => {
 const ReadComponent = ({ title,author,lastedit,content }:{title:string,author:string,lastedit:string,content:string}) => {
 
     const centerContainer:React.CSSProperties  = { 
-        width:useWindowWidth()*0.5,
-        height:'auto',
-        textAlign:'center',
-        backgroundColor:"#EEEEEE"
-
+        width:"100%",
+        height:'100%',
+        textAlign:'right',
+        backgroundColor:"#EEEEEE",
+        overflow:'auto'
     };
+    if(title.length == 0){
+        title = "タイトル"
+    }
     return (
         <div style={centerContainer}>
 
-        <h2 style={{textAlign:'left',margin:10}}>{title}</h2>
-        <p style={{textAlign:'left',marginLeft:20}}>{author}・{lastedit}</p>
+        <h2 style={{textAlign:'left',margin:10,color:"#111111"}}>{title}</h2>
+        <p style={{textAlign:'left',marginLeft:20,color:"#111111"}}>{author}・{lastedit}</p>
         <hr/>
-        <p style={{textAlign:'left',margin:10}}>
+        <p style={{textAlign:'left',margin:10,color:"#111111"}}>
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {content}
             </ReactMarkdown>

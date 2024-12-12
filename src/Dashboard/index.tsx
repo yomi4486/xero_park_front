@@ -68,9 +68,8 @@ const Dashboard: React.FC = () => {
     }
     return (
         <body style={bodyStyle}>
-            
-        <FlashMessage message="ログインに成功しました" type="ok"/>
         <AppBar/>
+        <FlashMessage message="ログインに成功しました" type="ok"/>
         <div style={centerContainer}>
             <img src={headerImage} style={{width:"35%"}}></img>
             <h1 style={{textAlign:"center",color:"#111111"}}>XeroParkへようこそ！</h1>
