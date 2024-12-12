@@ -66,12 +66,14 @@ const AppBar: React.FC = () => {
     }
     return (
         <div style={appBarStyle}>
+            <div style={{display:"flex",alignItems: "center",padding:10}}>
             <p 
                 style={{
                     textAlign:"left",                    
                     marginLeft:20,
                     marginRight:10,
-                    left:10
+                    left:10,
+                    fontSize:30
                 }}
             >Xero Park</p>
             <div className="menu-item" onClick={navigateEdit}> {/*投稿ボタン*/}
@@ -97,6 +99,7 @@ const AppBar: React.FC = () => {
                 }}
                 >お気に入り</p>
             </div>
+            </div>
             <img 
                 alt="your account" 
                 src={user.picture} 
@@ -111,6 +114,7 @@ const AppBar: React.FC = () => {
                 }}
                 // TODO: アイコン画像をクリックしたときにメニューバーを表示したい
             ></img>
+
         </div>
     );
 };
