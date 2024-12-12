@@ -10,6 +10,7 @@ import EditPage from './Edit';
 import AppBar from './assets/AppBar';
 import ReadPage from './Read';
 import { HelmetProvider } from "react-helmet-async";
+import headerImage from './assets/header.png';
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 const REDIRECT_URI = 'http://localhost:5173';
@@ -141,8 +142,9 @@ const MainApp: React.FC = () => {
     <body style={bodyStyle}>
       <AppBar />
       <div style={centerContainer}>
-        <h1 style={{ textAlign: "center" }}>XeroParkへようこそ！</h1>
-        <p style={{ textAlign: "center", marginBottom: 30 }}>あなたの素晴らしい実績をここに書き残しましょう！</p>
+        <img src={headerImage} style={{width:"35%"}}></img>
+        <h1 style={{ textAlign: "center",color:'#111111' }}>XeroParkへようこそ！</h1>
+        <p style={{ textAlign: "center", marginBottom: 30,color:'#111111' }}>あなたの素晴らしい実績をここに書き残しましょう！</p>
         <button style={buttonStyle} onClick={performGoogleAuth}>ログイン</button>
       </div>
     </body>
