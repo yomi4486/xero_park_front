@@ -5,6 +5,7 @@ import AppBar from '../assets/AppBar/index';
 
 import postContext from '../../lib/post';
 
+import ReadComponent from '../assets/ReadComponent';
 const useWindowWidth = () => {
     const [width, setWidth] = useState(window.innerWidth);
   
@@ -54,9 +55,14 @@ const EditPage: React.FC = () => {
         borderRadius: "2px",
         fontSize: "18px",
         cursor: "pointer",
+        
     };
-    const centerContainer:React.CSSProperties  = { 
-        textAlign: 'center'
+    const centerMainContainer:React.CSSProperties  = { 
+        textAlign: 'center',
+        display:"flex"
+    };
+    const centerSubContainer:React.CSSProperties  = { 
+        textAlign: 'center',
     };
     const titleInputStyle:React.CSSProperties  = {
         justifyContent: 'center', 
@@ -86,7 +92,7 @@ const EditPage: React.FC = () => {
         color:"#eeeeee"
     };
 
-    const [titleText, setTitleText] = useState("");
+    const [titleText, setTitleText] = useState("無題");
     const [contentText, setContentText] = useState("");
     const [datailText, setDatailText] = useState("");
     const navigate = useNavigate();
@@ -115,7 +121,9 @@ const EditPage: React.FC = () => {
     return (
         <body style={bodyStyle}>
         <AppBar/>
-        <div style={centerContainer}>
+        <div style={centerSubContainer}>
+        <div style={centerMainContainer}>
+            <div>
             <input 
                 type="text" 
                 style={titleInputStyle} 
@@ -136,8 +144,12 @@ const EditPage: React.FC = () => {
                 value={contentText}
                 onChange={(event) => setContentText(event.target.value)}
             />
+            </div>
+            <ReadComponent title={titleText} content={contentText} author='yomi4486' lastedit=''/>
             <br />
-            <button style={buttonStyle} onClick={post}>投稿</button>
+            
+        </div>
+        <button style={buttonStyle} onClick={post}>投稿</button>
         </div>
         </body>
     );

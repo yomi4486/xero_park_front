@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import AppBar from '../assets/AppBar/index';
+import { Helmet } from "react-helmet-async";
 
 import getContext from '../../lib/get';
-
+import ReadComponent from '../assets/ReadComponent';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 const useWindowWidth = () => {
     const [width, setWidth] = useState(window.innerWidth);
@@ -42,11 +44,10 @@ const ReadPage: React.FC = () => {
     useEffect(()=>{
     const getContent = async () => {
         const result = await getContext({id:`${id}`});
-        setContent(result ?? { title: "No title", content: "No content", author: "Unknown"});
+        setContent(result ?? { title: "Page Not Found", content: "No content", author: "Unknown",lastedit:"-"});
     };
         getContent();
     },[id]);
-
     const bodyStyle = {
         backgroundColor: "#FEFFFE",
         width: useWindowWidth(),
@@ -56,24 +57,22 @@ const ReadPage: React.FC = () => {
         height: '100vh',
         margin: 0,
     };
-    const centerContainer:React.CSSProperties  = { 
-        width:useWindowWidth()*0.5,
-        height:'auto',
-        textAlign:'center',
-        backgroundColor:"#EEEEEE"
-
-    };
+    const defaultContent = { 
+        title: "Loading...", 
+        author: "Loading...", 
+        lastedit: "Loading...", 
+        content: "Loading..." 
+    }; 
+    const displayContent = content ?? defaultContent;
+    
     return (
+        
         <body style={bodyStyle}>
         <AppBar/>
-        <div style={centerContainer}>
-            <h2 style={{textAlign:'left',margin:10}}>{content?.title}</h2>
-            <p style={{textAlign:'left',marginLeft:20}}>{content?.author}・{content?.lastedit}</p>
-            <hr/>
-            <p style={{textAlign:'left',margin:10}}>
-                <ReactMarkdown>{content?.content}</ReactMarkdown>
-            </p>
-        </div>
+        <Helmet>
+                <title>{displayContent?.title}</title>
+        </Helmet>
+        <ReadComponent title={displayContent?.title} author={displayContent?.author} lastedit={displayContent?.lastedit} content={displayContent?.content} />
         </body>
     );
 };

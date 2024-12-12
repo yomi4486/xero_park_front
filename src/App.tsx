@@ -9,6 +9,7 @@ import { parseFragmentString, saveOAuthParams, getSavedOAuthParams } from '../li
 import EditPage from './Edit';
 import AppBar from './assets/AppBar';
 import ReadPage from './Read';
+import { HelmetProvider } from "react-helmet-async";
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 const REDIRECT_URI = 'http://localhost:5173';
@@ -171,7 +172,9 @@ const App: React.FC = () => {
   return (
     <AuthProvider>
       <Router>
-        <MainApp />
+        <HelmetProvider>
+          <MainApp />
+        </HelmetProvider>
       </Router>
     </AuthProvider>
   );
