@@ -23,6 +23,7 @@ const postContext = async ({token,title,datail,content,tags}: PostContextParams)
         return;
     }
     const responseBody = await response.text();
+    console.log(responseBody);
     return responseBody;
 };
 
