@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ClassAttributes, HTMLAttributes  } from 'react';
+import React, { ClassAttributes, HTMLAttributes  } from 'react';
 
 import ReactMarkdown from 'react-markdown';
 import type { ExtraProps } from 'react-markdown'
@@ -7,20 +7,7 @@ import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-const useWindowWidth = () => {
-    const [width, setWidth] = useState(window.innerWidth);
-  
-    useEffect(() => {
-      const handleResize = () => setWidth(window.innerWidth);
-      window.addEventListener('resize', handleResize);
-  
-      return () => {
-        window.removeEventListener('resize', handleResize);
-      };
-    }, []);
-  
-    return width;
-};
+
 
 const ReadComponent = ({ title,author,lastedit,content }:{title:string,author:string,lastedit:string,content:string}) => {
 
