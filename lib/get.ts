@@ -1,16 +1,11 @@
 interface PostContextParams { id: String };
 const getContext = async ({id}: PostContextParams) => {
-    const userData = {
-        id:id
-    };
-    
     const url = `http://localhost:6789/read?id=${id}`; // *にAPIエンドポイントを入れる
     const response = await fetch(url, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(userData),
     });
   
     // レスポンスの確認
@@ -18,8 +13,7 @@ const getContext = async ({id}: PostContextParams) => {
         console.error("Error in user creation:", response);
         return;
     }
-    const responseBody = await response.text();
-    console.log(responseBody);
+    const responseBody = await response.json();
     return responseBody;
 };
 
