@@ -19,6 +19,7 @@ const getContext = async ({id}: PostContextParams) => {
         return;
     }
     const responseBody = await response.text();
+    console.log(responseBody);
     return responseBody;
 };
 

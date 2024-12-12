@@ -91,7 +91,7 @@ const EditPage: React.FC = () => {
     const [datailText, setDatailText] = useState("");
     const navigate = useNavigate();
 
-    const post = () => {
+    const post = async () => {
         let datail;
         if(datailText.length == 0){
             datail = `${contentText.substring(0,250)}`;
@@ -102,7 +102,7 @@ const EditPage: React.FC = () => {
             datail = datailText;
         }
 
-        const res = postContext({
+        const res = await postContext({
             token:"yomi4486",
             title:titleText,
             datail:datail,
