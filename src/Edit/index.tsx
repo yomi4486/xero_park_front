@@ -109,24 +109,38 @@ const EditPage: React.FC = () => {
 
     // 見出しを作成
     const createMidashi = () => {
-        setContentText(contentText+"## 見出し")
+        setContentText(contentText+"## 見出し\n")
     };
 
     // コードブロックを作成
     const createCodeBlock = () => {
-        setContentText(contentText+"```\n// Type your source code...\n```")
+        setContentText(contentText+"```\n// Type your source code...\n```\n")
         if(inputRef.current) inputRef.current.focus();
     };
 
     // 小見出しを作成
     const createKomidashi = () => {
-        setContentText(contentText+"### 小見出し")
+        setContentText(contentText+"### 小見出し\n")
         if(inputRef.current) inputRef.current.focus();
     };
 
     // 小見出しを作成
     const createURL = () => {
-        setContentText(contentText+"[表示するテキスト](https://example.com)")
+        setContentText(contentText+"[表示するテキスト](https://example.com)\n")
+        if(inputRef.current) inputRef.current.focus();
+    };
+
+    const createPoints = () => {
+        const lines = contentText.split('\n');
+        const targetContext = lines[lines.length-2];
+        console.log(targetContext)
+        if(targetContext == undefined || targetContext.substring(0,2)!="- " && targetContext.substring(0,4)!="  - "){
+            setContentText(contentText+"- 箇条書き\n")
+        }else if(targetContext.substring(0,4)=="  - "){
+            setContentText(contentText+"  - 箇条書き\n")
+        }else{
+            setContentText(contentText+"  - 箇条書き\n")
+        }
         if(inputRef.current) inputRef.current.focus();
     };
 
@@ -180,6 +194,7 @@ const EditPage: React.FC = () => {
                             <li className='menu-item' style={{ borderBottom: '1px solid #ccc',paddingTop:2,paddingBottom:2 }} onClick={createKomidashi}>小見出しを作成</li> 
                             <li className='menu-item' style={{ borderBottom: '1px solid #ccc',paddingTop:2,paddingBottom:2 }} onClick={createCodeBlock}>ソースコード</li> 
                             <li className='menu-item' style={{ borderBottom: '1px solid #ccc',paddingTop:2,paddingBottom:2 }} onClick={createURL}>URL</li>
+                            <li className='menu-item' style={{ borderBottom: '1px solid #ccc',paddingTop:2,paddingBottom:2 }} onClick={createPoints}>箇条書き</li>
                             <li className='menu-item'>画像</li> 
                         </ul> 
                     )}  
