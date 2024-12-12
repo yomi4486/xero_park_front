@@ -1,0 +1,20 @@
+@keyframes fadeanim {
+    0% {
+      opacity: 1;
+    }
+    20% {
+        opacity: .7
+    }
+    100% {
+        opacity: .5;
+    }
+}
+
+.menu-item:hover {
+    animation: fadeanim 0.15s ease-in-out;
+    opacity: .5;
+}
+.menu-item{
+    opacity: 1;
+}
+  

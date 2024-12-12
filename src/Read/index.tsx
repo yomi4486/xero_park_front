@@ -5,8 +5,6 @@ import { Helmet } from "react-helmet-async";
 
 import getContext from '../../lib/get';
 import ReadComponent from '../assets/ReadComponent';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 
 const useWindowWidth = () => {
     const [width, setWidth] = useState(window.innerWidth);
@@ -64,7 +62,6 @@ const ReadPage: React.FC = () => {
         content: "Loading..." 
     }; 
     const displayContent = content ?? defaultContent;
-    
     return (
         
         <body style={bodyStyle}>
@@ -72,7 +69,9 @@ const ReadPage: React.FC = () => {
         <Helmet>
                 <title>{displayContent?.title}</title>
         </Helmet>
+        <div style={{width:"70%",height:"calc(100% - 120px)"}}>
         <ReadComponent title={displayContent?.title} author={displayContent?.author} lastedit={displayContent?.lastedit} content={displayContent?.content} />
+        </div>
         </body>
     );
 };
