@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ClassAttributes, HTMLAttributes  } from 'react';
 
 import ReactMarkdown from 'react-markdown';
+import type { ExtraProps } from 'react-markdown'
 import remarkGfm from 'remark-gfm';
+
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const useWindowWidth = () => {
     const [width, setWidth] = useState(window.innerWidth);
@@ -30,6 +34,27 @@ const ReadComponent = ({ title,author,lastedit,content }:{title:string,author:st
     if(title.length == 0){
         title = "タイトル"
     }
+
+    const Pre = ({
+        children,
+        ...props
+    }: ClassAttributes<HTMLPreElement> &
+        HTMLAttributes<HTMLPreElement> &
+        ExtraProps) => {
+        if (!children || typeof children !== 'object') {
+          return <code {...props}>{children}</code>
+        }
+        const childType = 'type' in children ? children.type : ''
+        if (childType !== 'code') {
+          return <code {...props}>{children}</code>
+        }
+    
+        const childProps = 'props' in children ? children.props : {}
+        const { children: code } = childProps
+    
+        return (
+            <SyntaxHighlighter style={vscDarkPlus}>{String(code).replace(/\n$/, '')}</SyntaxHighlighter>
+    )};
     return (
         <div style={centerContainer}>
 
@@ -37,7 +62,8 @@ const ReadComponent = ({ title,author,lastedit,content }:{title:string,author:st
         <p style={{textAlign:'left',marginLeft:20,color:"#111111"}}>{author}・{lastedit}</p>
         <hr/>
         <p style={{textAlign:'left',margin:10,color:"#111111"}}>
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            
+            <ReactMarkdown remarkPlugins={[remarkGfm]} components={{pre:Pre}}>
                 {content}
             </ReactMarkdown>
         </p>

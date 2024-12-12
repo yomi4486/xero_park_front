@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,MouseEvent,useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from "react-helmet-async";
 
 import AppBar from '../assets/AppBar/index';
 
 import postContext from '../../lib/post';
 
 import ReadComponent from '../assets/ReadComponent';
+
+import '../assets/AppBar/main.css'
 
 const useWindowWidth = () => {
     const [width, setWidth] = useState(window.innerWidth);
@@ -86,6 +89,47 @@ const EditPage: React.FC = () => {
     const [titleText, setTitleText] = useState("無題");
     const [contentText, setContentText] = useState("");
     const [datailText, setDatailText] = useState("");
+
+    // 右クリックメニューのフック
+    const [menuVisible, setMenuVisible] = useState(false)
+    const [menuPosition, setMenuPosition] = useState({x:0,y:0})
+
+    const handleContextMenu = (event: MouseEvent<HTMLDivElement>) => {
+        event.preventDefault(); 
+        setMenuPosition({ x: event.clientX, y: event.clientY }); 
+        setMenuVisible(true); 
+    }; 
+    const invisivleMenu = () => { setMenuVisible(false); };
+
+    // テキストフィールドにフォーカスを合わせるためのフック
+    const inputRef = useRef<HTMLTextAreaElement>(null);
+    useEffect(() => {
+        if(inputRef.current) inputRef.current.focus();
+    },[])
+
+    // 見出しを作成
+    const createMidashi = () => {
+        setContentText(contentText+"## 見出し")
+    };
+
+    // コードブロックを作成
+    const createCodeBlock = () => {
+        setContentText(contentText+"```\n// Type your source code...\n```")
+        if(inputRef.current) inputRef.current.focus();
+    };
+
+    // 小見出しを作成
+    const createKomidashi = () => {
+        setContentText(contentText+"### 小見出し")
+        if(inputRef.current) inputRef.current.focus();
+    };
+
+    // 小見出しを作成
+    const createURL = () => {
+        setContentText(contentText+"[表示するテキスト](https://example.com)")
+        if(inputRef.current) inputRef.current.focus();
+    };
+
     const navigate = useNavigate();
 
     const post = async () => {
@@ -111,10 +155,34 @@ const EditPage: React.FC = () => {
 
     return (
         <body style={bodyStyle}>
+        <Helmet>
+            <title>新規記事を作成</title>
+        </Helmet>
         <AppBar/>
         <div style={centerMainContainer}>
             <div style={centerSubContainer}>
-                <div style={{width:'45%', textAlign: 'left',marginRight:'60px'}}>
+                <div style={{width:'45%', textAlign: 'left',marginRight:'60px'}} onClick={invisivleMenu}>
+                    {menuVisible && ( 
+                        <ul style={{ 
+                            position: 'absolute', 
+                            top: menuPosition.y, 
+                            left: menuPosition.x, 
+                            backgroundColor: 'white', 
+                            border: '2px solid black', 
+                            listStyle: 'none', 
+                            padding: '10px', 
+                            color:"#111111", 
+                            borderRadius:4,
+                            fontSize:20
+                        }}> 
+                            <li className='menu-item' style={{ paddingBottom:6,paddingLeft:2 }}>×</li>
+                            <li className='menu-item' style={{ borderBottom: '1px solid #ccc',paddingTop:2,paddingBottom:2 }} onClick={createMidashi}>見出しを作成</li>
+                            <li className='menu-item' style={{ borderBottom: '1px solid #ccc',paddingTop:2,paddingBottom:2 }} onClick={createKomidashi}>小見出しを作成</li> 
+                            <li className='menu-item' style={{ borderBottom: '1px solid #ccc',paddingTop:2,paddingBottom:2 }} onClick={createCodeBlock}>ソースコード</li> 
+                            <li className='menu-item' style={{ borderBottom: '1px solid #ccc',paddingTop:2,paddingBottom:2 }} onClick={createURL}>URL</li>
+                            <li className='menu-item'>画像</li> 
+                        </ul> 
+                    )}  
                     <input 
                         type="text" 
                         style={titleInputStyle} 
@@ -129,12 +197,15 @@ const EditPage: React.FC = () => {
                         value={datailText}
                         onChange={(event) => setDatailText(event.target.value)}
                     />
+                    <div onContextMenu={handleContextMenu} onClick={invisivleMenu}>
                     <textarea
+                        ref={inputRef}
                         style={contentInputStyle} 
                         placeholder="内容"
                         value={contentText}
                         onChange={(event) => setContentText(event.target.value)}
                     />
+                    </div>
                     <div style={{textAlign:'right'}}><button style={buttonStyle} onClick={post}>投稿</button></div>
                 </div>
                 <div style={{ width: '45%', height: '80vh', backgroundColor: "#eeeeee", borderRadius: 4, textAlign: 'right'}}>
