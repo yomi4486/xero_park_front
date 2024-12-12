@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-
+import { useParams } from 'react-router-dom';
 import AppBar from '../assets/AppBar/index';
 
-import postContext from '../../lib/post';
+import getContext from '../../lib/get';
 
 const useWindowWidth = () => {
     const [width, setWidth] = useState(window.innerWidth);
@@ -35,8 +34,9 @@ const useWindowHeight = () => {
     return height;
 };
 
-const EditPage: React.FC = () => {    
-
+const ReadPage: React.FC = () => {    
+    const { id } = useParams();
+    let content = getContext({id:`${id}`})
     const bodyStyle = {
         backgroundColor: "#FEFFFE",
         width: useWindowWidth(),
@@ -85,62 +85,14 @@ const EditPage: React.FC = () => {
         resize: "none",
         color:"#eeeeee"
     };
-
-    const [titleText, setTitleText] = useState("");
-    const [contentText, setContentText] = useState("");
-    const [datailText, setDatailText] = useState("");
-    const navigate = useNavigate();
-
-    const post = () => {
-        let datail;
-        if(datailText.length == 0){
-            datail = `${contentText.substring(0,250)}`;
-            if (contentText.length >= 250){
-                datail += "...";
-            }
-        }else{
-            datail = datailText;
-        }
-
-        const res = postContext({
-            token:"yomi4486",
-            title:titleText,
-            datail:datail,
-            content:contentText,
-            tags:""
-        })
-        navigate(`/${res}`)
-    };
-
     return (
         <body style={bodyStyle}>
         <AppBar/>
         <div style={centerContainer}>
-            <input 
-                type="text" 
-                style={titleInputStyle} 
-                placeholder="タイトル" 
-                value={titleText}
-                onChange={(event) => setTitleText(event.target.value)}
-            />
-            <input 
-                type="text" 
-                style={titleInputStyle} 
-                placeholder="概要 （何も書かなければ本文から抜粋されます）" 
-                value={datailText}
-                onChange={(event) => setDatailText(event.target.value)}
-            />
-            <textarea
-                style={contentInputStyle} 
-                placeholder="内容"
-                value={contentText}
-                onChange={(event) => setContentText(event.target.value)}
-            />
-            <br />
-            <button style={buttonStyle} onClick={post}>投稿</button>
+            <p>{`表示ページ:${id}`}</p>
         </div>
         </body>
     );
 };
 
-export default EditPage;
+export default ReadPage;

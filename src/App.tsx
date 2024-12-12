@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { parseFragmentString, saveOAuthParams, getSavedOAuthParams } from '../lib/oauthUtils';
 import EditPage from './Edit';
 import AppBar from './assets/AppBar';
+import ReadPage from './Read';
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 const REDIRECT_URI = 'http://localhost:5173';
@@ -160,6 +161,7 @@ const MainApp: React.FC = () => {
         path="/Edit"
         element={<PrivateRoute><EditPage /></PrivateRoute>}
       />
+      <Route path="/:id" Component={ReadPage} />
     </Routes>
   );
 
