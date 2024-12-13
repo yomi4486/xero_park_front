@@ -1,6 +1,6 @@
 interface PostContextParams { id: String };
 const getContext = async ({id}: PostContextParams) => {
-    const url = `http://localhost:30001/read?id=${id}`; // *にAPIエンドポイントを入れる
+    const url = `http://localhost:6789/read?id=${id}`; // *にAPIエンドポイントを入れる
     const response = await fetch(url, {
         method: 'GET',
         headers: {

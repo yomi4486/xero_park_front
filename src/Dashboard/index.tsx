@@ -8,7 +8,6 @@ import headerImage from '../assets/header.png'
 
 const useWindowWidth = () => {
     const [width, setWidth] = useState(window.innerWidth);
-  
     useEffect(() => {
       const handleResize = () => setWidth(window.innerWidth);
       window.addEventListener('resize', handleResize);
