@@ -3,11 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Helmet } from "react-helmet-async";
 
 import AppBar from '../assets/AppBar/index';
-
 import postContext from '../../lib/post';
-
 import ReadComponent from '../assets/ReadComponent';
-
 import '../assets/AppBar/main.css'
 
 const useWindowWidth = () => {
@@ -69,7 +66,8 @@ const EditPage: React.FC = () => {
         marginRight:10,
         padding:10,
         background:"#111111",
-        color:"#eeeeee"
+        color:"#eeeeee",
+        boxSizing: 'border-box'
     };
     const contentInputStyle:React.CSSProperties  = {
         justifyContent: 'center', 
@@ -83,7 +81,8 @@ const EditPage: React.FC = () => {
         padding:15,
         background:"#111111",
         resize: "none",
-        color:"#eeeeee"
+        color:"#eeeeee",
+        boxSizing: 'border-box'
     };
 
     const [titleText, setTitleText] = useState("無題");
@@ -150,7 +149,6 @@ const EditPage: React.FC = () => {
         }
         if(inputRef.current) inputRef.current.focus();
     };
-
 
     const navigate = useNavigate();
 
