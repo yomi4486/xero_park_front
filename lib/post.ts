@@ -8,7 +8,7 @@ const postContext = async ({token,title,datail,content,tags}: PostContextParams)
         tags: tags
     };
     
-    const url = "http://localhost:30001/post"; // *にAPIエンドポイントを入れる
+    const url = "http://localhost:6789/post"; // *にAPIエンドポイントを入れる
     const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -16,6 +16,7 @@ const postContext = async ({token,title,datail,content,tags}: PostContextParams)
         },
         body: JSON.stringify(userData),
     });
+    
   
     // レスポンスの確認
     if (!response.ok) {

@@ -27,6 +27,7 @@ const ReadPage: React.FC = () => {
     useEffect(()=>{
     const getContent = async () => {
         const result = await getContext({id:`${id}`});
+        console.log(result);
         setContent(result ?? { title: "Page Not Found", content: "No content", author: "Unknown",lastedit:"-"});
     };
         getContent();
@@ -55,7 +56,7 @@ const ReadPage: React.FC = () => {
                 <title>{displayContent?.title}</title>
         </Helmet>
         <div style={{width:"70%",height:"calc(100% - 120px)"}}>
-        <ReadComponent title={displayContent?.title} author={displayContent?.author} lastedit={displayContent?.lastedit} content={displayContent?.content} />
+            <ReadComponent title={displayContent?.title} author={displayContent?.author} lastedit={displayContent?.lastedit} content={displayContent?.content} />
         </div>
         </body>
     );
