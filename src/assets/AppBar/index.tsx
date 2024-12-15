@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useRef} from 'react';
 import { useAuth } from '../../../lib/AuthContext';
 import './main.css'
 import { useNavigate } from 'react-router-dom';
@@ -23,6 +23,11 @@ const AppBar: React.FC = () => {
     const navigateEdit = () => {
         navigate("/Edit")
     }
+
+    const [menuVisible, setMenuVisible] = useState(false); 
+    const imgRef = useRef<HTMLImageElement>(null); 
+    const handleClick = () => { setMenuVisible(!menuVisible); };
+    const inVisivleMenu = () => {if(menuVisible) setMenuVisible(false)};
     if (!user){ // 未ログイン時の挙動を記述
         return (
             <div style={appBarStyle}>
@@ -65,7 +70,7 @@ const AppBar: React.FC = () => {
         )
     }
     return (
-        <div style={appBarStyle}>
+        <div style={appBarStyle} onClick={inVisivleMenu}>
             <div style={{display:"flex",alignItems: "center",padding:10}}>
             <p 
                 style={{
@@ -100,21 +105,47 @@ const AppBar: React.FC = () => {
                 >お気に入り</p>
             </div>
             </div>
-            <img 
-                alt="your account" 
-                src={user.picture} 
-                style={{
-                    borderRadius:18,
-                    width:36,
-                    height:36,
-                    textAlign:"right",
-                    marginLeft:10,
-                    marginRight:10,
-                    right:10
-                }}
-                // TODO: アイコン画像をクリックしたときにメニューバーを表示したい
-            ></img>
-
+            <div>
+                <img 
+                    ref={imgRef}
+                    onClick={handleClick}
+                    alt="your account" 
+                    src={user.picture} 
+                    style={{
+                        borderRadius:18,
+                        width:36,
+                        height:36,
+                        textAlign:"right",
+                        marginLeft:10,
+                        marginRight:10,
+                        right:10
+                    }}
+                ></img>
+                {menuVisible && imgRef.current && ( 
+                    <div style={{ 
+                        position: 'absolute', 
+                        top: imgRef.current.offsetTop + imgRef.current.offsetHeight, 
+                        left: 'auto',
+                        right:1,
+                        backgroundColor: 'white', 
+                        border: '1px solid #ccc', 
+                        borderRadius: 4, 
+                        boxShadow: '0 2px 10px rgba(0,0,0,0.1)', 
+                        zIndex: 1000,
+                        color:"#111111"
+                    }}> 
+                        <ul style={{ 
+                            listStyle: 'none', 
+                            padding: 0, 
+                            margin: 0 
+                        }}> 
+                            <li style={{ padding: '8px 16px' }}>アカウント</li> 
+                            <li style={{ padding: '8px 16px' }}>お気に入り</li> 
+                            <li style={{ padding: '8px 16px' }}>設定</li>
+                        </ul> 
+                    </div> 
+                )}
+            </div>
         </div>
     );
 };
