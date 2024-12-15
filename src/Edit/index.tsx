@@ -7,6 +7,8 @@ import postContext from '../../lib/post';
 import ReadComponent from '../assets/ReadComponent';
 import '../assets/AppBar/main.css'
 
+import FlashMessage from '../assets/SnackBar';
+
 const useWindowWidth = () => {
     const [width, setWidth] = useState(window.innerWidth);
   
@@ -151,8 +153,9 @@ const EditPage: React.FC = () => {
     };
 
     const navigate = useNavigate();
-
+    const [errorMessage, setErrorMessage] = useState('');
     const post = async () => {
+
         let datail;
         if(datailText.length == 0){
             datail = `${contentText.substring(0,250)}`;
@@ -162,15 +165,20 @@ const EditPage: React.FC = () => {
         }else{
             datail = datailText;
         }
-
-        const res = await postContext({
-            token:"yomi4486",
-            title:titleText,
-            datail:datail,
-            content:contentText,
-            tags:""
-        })
-        navigate(`/${res}`)
+        try{
+            const res = await postContext({
+                token:"yomi4486",
+                title:titleText,
+                datail:datail,
+                content:contentText,
+                tags:""
+            })
+            navigate(`/${res}`);
+        }catch(e){
+            console.error(`catched error:${e}`)
+            setErrorMessage('投稿に失敗しました。');
+        }
+       
     };
 
     return (
@@ -179,6 +187,7 @@ const EditPage: React.FC = () => {
             <title>新規記事を作成</title>
         </Helmet>
         <AppBar/>
+        {errorMessage && <FlashMessage message={errorMessage} type="error" />}
         <div style={centerMainContainer}>
             <div style={centerSubContainer}>
                 <div style={{width:'45%', textAlign: 'left',marginRight:'60px'}} onClick={invisivleMenu}>
