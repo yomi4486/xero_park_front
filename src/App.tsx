@@ -11,6 +11,7 @@ import AppBar from './assets/AppBar';
 import ReadPage from './Read';
 import { HelmetProvider } from "react-helmet-async";
 import headerImage from './assets/header.png';
+import MyPage from './MyPage';
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 const REDIRECT_URI = 'http://localhost:5173';
@@ -163,6 +164,10 @@ const MainApp: React.FC = () => {
       <Route
         path="/Edit"
         element={<PrivateRoute><EditPage /></PrivateRoute>}
+      />
+      <Route
+        path="/MyPage"
+        element={<PrivateRoute><MyPage /></PrivateRoute>}
       />
       <Route path="/:id" Component={ReadPage} />
     </Routes>

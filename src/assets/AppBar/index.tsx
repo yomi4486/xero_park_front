@@ -24,6 +24,10 @@ const AppBar: React.FC = () => {
         navigate("/Edit")
     }
 
+    const navigateMyPage = () => {
+        navigate('/MyPage')
+    }
+
     const [menuVisible, setMenuVisible] = useState(false); 
     const imgRef = useRef<HTMLImageElement>(null); 
     const handleClick = () => { setMenuVisible(!menuVisible); };
@@ -124,7 +128,7 @@ const AppBar: React.FC = () => {
                 {menuVisible && imgRef.current && ( 
                     <div style={{ 
                         position: 'absolute', 
-                        top: imgRef.current.offsetTop + imgRef.current.offsetHeight, 
+                        top: imgRef.current.offsetTop + imgRef.current.offsetHeight+16, 
                         left: 'auto',
                         right:1,
                         backgroundColor: 'white', 
@@ -132,15 +136,18 @@ const AppBar: React.FC = () => {
                         borderRadius: 4, 
                         boxShadow: '0 2px 10px rgba(0,0,0,0.1)', 
                         zIndex: 1000,
-                        color:"#111111"
+                        color:"#111111",
+                        boxSizing:'border-box',
                     }}> 
                         <ul style={{ 
                             listStyle: 'none', 
-                            padding: 0, 
-                            margin: 0 
+                            margin: 0,
+                            fontSize:20,
+                            padding:'10px'
                         }}> 
                             <li style={{ padding: '8px 16px' }}>アカウント</li> 
                             <li style={{ padding: '8px 16px' }}>お気に入り</li> 
+                            <li style={{ padding: '8px 16px' }} onClick={navigateMyPage}>自分の記事</li>
                             <li style={{ padding: '8px 16px' }}>設定</li>
                         </ul> 
                     </div> 
