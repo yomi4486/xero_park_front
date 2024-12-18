@@ -1,0 +1,24 @@
+@keyframes fadeanim {
+    0% {
+        transform: translateY(0px);
+        box-shadow: 0px 5px 5px #88888822;
+    }
+    20% {
+        transform: translateY(-4px);
+        box-shadow: 0px 5px 5px #88888833;
+    }
+    100% {
+        transform: translateY(-5px);
+        box-shadow: 0px 5px 5px #88888833;
+    }
+}
+
+.contentBox:hover {
+    animation: fadeanim 0.15s ease-in-out;
+    transform: translateY(-5px);
+    box-shadow: 0px 5px 5px #88888833;
+}
+.contentBox{
+    opacity: 1;
+}
+  
